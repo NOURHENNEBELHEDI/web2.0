@@ -1,0 +1,19 @@
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>username</td>
+        <td>email</td>
+
+    </tr>
+    {% for a in Authors %}
+        <tr>
+            <td>{{ a.id }}</td>
+            <td> {{ a.username|upper }}</td>
+            <td> {{ a.email }}</td>
+
+        </tr>
+
+    {% endfor %}
+</table>
+
+
