@@ -23,8 +23,11 @@ class Author
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
     private Collection $books;
+<<<<<<< HEAD
     #[ORM\Column]
     private ?int $nbBooks= null;
+=======
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 
     public function __construct()
     {
@@ -59,6 +62,7 @@ class Author
 
         return $this;
     }
+<<<<<<< HEAD
     public function getnbBooks(): ?int
     {
         return $this->nbBooks;
@@ -70,6 +74,8 @@ class Author
 
         return $this;
     }
+=======
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 
     /**
      * @return Collection<int, Book>
@@ -100,10 +106,13 @@ class Author
 
         return $this;
     }
+<<<<<<< HEAD
 
     public function __toString()
     {
         return (string)$this->getUsername();
     }
 
+=======
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 }

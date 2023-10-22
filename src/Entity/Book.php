@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+<<<<<<< HEAD
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Form\BookType;
@@ -9,6 +10,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 
+=======
+use App\Repository\BookRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
 {
@@ -31,16 +38,28 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     private ?Author $author = null;
 
+<<<<<<< HEAD
     public function getRef(): ?int
+=======
+    public function getId(): ?int
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
     {
         return $this->ref;
     }
 
+<<<<<<< HEAD
     public function setRef(int $ref): void
     {
         $this->ref = $ref;
 
 
+=======
+    public function setRef(string $ref): static
+    {
+        $this->ref = $ref;
+
+        return $this;
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
     }
 
     public function getTitle(): ?string

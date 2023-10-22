@@ -2,17 +2,23 @@
 
 namespace App\Controller;
 
+<<<<<<< HEAD
 use App\Entity\Book;
 use App\Form\BookType;
+=======
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry as CustomManagerRegistry;
 use phpDocumentor\Reflection\Types\True_;
 
 
+=======
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 
 class BookController extends AbstractController
 {
@@ -23,6 +29,7 @@ class BookController extends AbstractController
             'controller_name' => 'BookController',
         ]);
     }
+<<<<<<< HEAD
     #[Route('/listBook', name: 'list_Book')]
     public function listBook(BookRepository $repository)
     {
@@ -93,4 +100,14 @@ return $this->render("book/listbook.html.twig",
         return $this->render('book/show.html.twig',['book'=>$book]);
     }
 
+=======
+    #[Route('/listbook', name: 'books')]
+    public function list(BookRepository $repository)
+    {
+        $books=$repository->findAll();
+        return $this->render("book/listbook.html.twig",
+            array('book'=>$books
+            ));
+    }
+>>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 }
