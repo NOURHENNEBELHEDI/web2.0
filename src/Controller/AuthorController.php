@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Repository\AuthorRepository;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry as CustomManagerRegistry;
+use App\Entity\Author;
+use App\Entity\Book;
 
 class AuthorController extends AbstractController
 {
@@ -16,8 +21,13 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    #[Route('/list/{var}', name: 'list_author')]
-    public function listAuthor($var)
+    #[Route('/showAuthor/{name}', name: 'app_showAuthor')]
+
+    public function showAuthor($name){
+        return $this->render('author/showAuthor.html.twig', ['n' => $name,]);
+    }
+    #[Route('/list', name: 'list_author')]
+    public function listAuthor()
     {
         $authors = array(
             array('id' => 1, 'username' => ' Victor Hugo','email'=> 'victor.hugo@gmail.com', 'nb_books'=> 100),
@@ -27,9 +37,9 @@ class AuthorController extends AbstractController
         );
 
         return $this->render("author/list.html.twig",
-            array('variable'=>$var,
-                'tabAuthors'=>$authors
-            ));
+
+                ['Authors'=>$authors]
+            );
     }
     #[Route('/author/{id}', name: 'author_details')]
     public function authorDetails($id)
@@ -49,8 +59,50 @@ class AuthorController extends AbstractController
             }
         }
 
-        return $this->render('author/showAuthor.html.twig', [
-            'author' => $author,
-        ]);
     }
+   #afficher Author
+    #[Route('/listAuthor', name: 'app_listAuthor')]
+    public function list(AuthorRepository $repository)
+    {
+        $authors=$repository->findAll();
+        return $this->render("author/listAuthor.html.twig", array('Authors'=>$authors));
+    }
+
+    #[Route('/addAuthorstat', name: 'app_add_authorstat')]
+    public function addAuthorstat(CustomManagerRegistry $managerRegistry)
+    {
+        #creez une instance de l'entite Author
+        $author= new Author();
+        $author->setUsername("nourhenne belhedi");
+        $author->setEmail("nourhenne.belhedi@esprit.tn");
+        // $em= $this->getDoctrine()->getManager();
+        $em= $managerRegistry->getManager();
+        $em->persist($author);
+        $em->flush();
+        return $this->redirectToRoute("app_listAuthor");
+
+    }
+    #[Route('/updateAuthorstat/{id}', name: 'update_authors')]
+    public function updateAuthorstat($id,AuthorRepository $repository,CustomManagerRegistry $managerRegistry)
+    {
+        $author= $repository->find($id);
+        $author->setEmail("eya.ali@esprit.tn");
+        $author->setUsername("eya ali");
+        // $em= $this->getDoctrine()->getManager();
+        $em= $managerRegistry->getManager();
+        $em->flush();
+        return $this->redirectToRoute("app_listAuthor");
+    }
+
+    #[Route('/deleteAuthorstat/{id}', name: 'remove_authors')]
+    public function deleteAuthorstat(AuthorRepository $repository,$id,
+                                 CustomManagerRegistry $managerRegistry)
+    {
+        $author= $repository->find($id);
+        $em = $managerRegistry->getManager();
+        $em->remove($author);
+        $em->flush();
+        return $this->redirectToRoute("app_listAuthor");
+    }
+
 }
