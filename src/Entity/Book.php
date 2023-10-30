@@ -2,20 +2,15 @@
 
 namespace App\Entity;
 
-<<<<<<< HEAD
+
 use App\Entity\Book;
+use App\Entity\Author;
 use App\Repository\BookRepository;
 use App\Form\BookType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 
-=======
-use App\Repository\BookRepository;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
-
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
 {
@@ -30,7 +25,7 @@ class Book
     private ?bool $published = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $publicationDate = null;
+    private  $publicationDate ;
 
     #[ORM\Column(length: 255)]
     private ?string $category = null;
@@ -38,87 +33,78 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     private ?Author $author = null;
 
-<<<<<<< HEAD
+
     public function getRef(): ?int
-=======
-    public function getId(): ?int
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
     {
         return $this->ref;
     }
 
-<<<<<<< HEAD
-    public function setRef(int $ref): void
-    {
-        $this->ref = $ref;
+        public function setRef(int $ref): void
+        {
+            $this->ref = $ref;
+
+         }
 
 
-=======
-    public function setRef(string $ref): static
-    {
-        $this->ref = $ref;
+        public function getTitle(): ?string
+        {
+            return $this->title;
+        }
 
-        return $this;
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
-    }
+        public function setTitle(string $title): static
+        {
+            $this->title = $title;
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+            return $this;
+        }
 
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
+        public function isPublished(): ?bool
+        {
+            return $this->published;
+        }
 
-        return $this;
-    }
+        public function setPublished(bool $published): static
+        {
+            $this->published = $published;
 
-    public function isPublished(): ?bool
-    {
-        return $this->published;
-    }
+            return $this;
+        }
 
-    public function setPublished(bool $published): static
-    {
-        $this->published = $published;
+        public function getPublicationDate():?\DateTimeInterface
+        {
+            return $this->publicationDate;
+        }
 
-        return $this;
-    }
+        public function setPublicationDate( \DateTimeInterface $publicationDate): static
+        {
+            $this->publicationDate = $publicationDate;
 
-    public function getPublicationDate(): ?\DateTimeInterface
-    {
-        return $this->publicationDate;
-    }
+            return $this;
+        }
 
-    public function setPublicationDate(\DateTimeInterface $publicationDate): static
-    {
-        $this->publicationDate = $publicationDate;
+        public function getCategory(): ?string
+        {
+            return $this->category;
+        }
 
-        return $this;
-    }
+        public function setCategory(string $category): static
+        {
+            $this->category = $category;
 
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
+            return $this;
+        }
 
-    public function setCategory(string $category): static
-    {
-        $this->category = $category;
+        public function getAuthor(): ?Author
+        {
+            return $this->author;
+        }
 
-        return $this;
-    }
+        public function setAuthor(?Author $author): static
+        {
+            $this->author = $author;
 
-    public function getAuthor(): ?Author
-    {
-        return $this->author;
-    }
+            return $this;
+        }
 
-    public function setAuthor(?Author $author): static
-    {
-        $this->author = $author;
-
-        return $this;
-    }
 }
+

@@ -2,23 +2,18 @@
 
 namespace App\Controller;
 
-<<<<<<< HEAD
+
 use App\Entity\Book;
 use App\Form\BookType;
-=======
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-<<<<<<< HEAD
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry as CustomManagerRegistry;
 use phpDocumentor\Reflection\Types\True_;
 
 
-=======
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
 
 class BookController extends AbstractController
 {
@@ -29,8 +24,8 @@ class BookController extends AbstractController
             'controller_name' => 'BookController',
         ]);
     }
-<<<<<<< HEAD
-    #[Route('/listBook', name: 'list_Book')]
+
+   #[Route('/listBook', name: 'list_Book')]
     public function listBook(BookRepository $repository)
     {
        // $books=$repository->findAll();
@@ -41,9 +36,8 @@ return $this->render("book/listbook.html.twig",
         /*return $this->render("book/listbook.html.twig",
             array('books'=>$repository->findBy(['published'=>false])
             )); //Nnhiib nafichi ken published tw naarja3 lil git
-        */
+       */
     }
-
     #[Route('/addBook', name: 'add_book')]
     public function addBook(Request $request,CustomManagerRegistry $managerRegistry)
     {
@@ -93,14 +87,19 @@ return $this->render("book/listbook.html.twig",
         $em->flush();
         return $this->redirectToRoute("list_Book");
     }
-    #[Route ('/showBook/{ref}',name:'show_book')]
-    public function showBook(Book $book)
-    {
+    #[Route('/showBook/{ref}', name: 'app_detailBook')]
 
-        return $this->render('book/show.html.twig',['book'=>$book]);
+    public function showBook($ref, BookRepository $repository)
+    {
+        $book = $repository->find($ref);
+        if (!$book) {
+            return $this->redirectToRoute('listBook');
+        }
+
+        return $this->render('book/show.html.twig', ['book' => $book]);
+
     }
 
-=======
     #[Route('/listbook', name: 'books')]
     public function list(BookRepository $repository)
     {
@@ -109,5 +108,50 @@ return $this->render("book/listbook.html.twig",
             array('book'=>$books
             ));
     }
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
+    #[Route('/search',name:'Search')]
+    function SearchBook(Request $request,BookRepository $repository){
+        $ref=$request->get('r');
+        $book=$repository->SearchByRef($ref);
+        return $this->render('book/listbook.html.twig',
+            ['books'=>$book]);
+    }
+    #[Route('/bookList')]
+    function listByAuthors(Request $request,BookRepository $repository){
+
+        $book=$repository->booksListByAuthors();
+        return $this->render('book/listbook.html.twig',
+            ['books'=>$book]);
+    }
+
+    #[Route('/findb')]
+    function findBook(Request $request,BookRepository $repository){
+
+        return $this->render('book/listbook.html.twig',["books"=>$repository->findBook()]
+        );
+    }
+
+    #[Route('/findBook')]
+    function findBookDate(Request $request,BookRepository $repository){
+
+        return $this->render('book/listbook.html.twig',["books"=>$repository->findByDate()]
+        );
+    }
+
+    #[Route('/updateCat', name: "update_cat")]
+    public function updateCategory(BookRepository $repository)
+    {
+        $repository->updateCat();
+        return $this->redirectToRoute("list_Book");
+    }
+
+    #[Route('/nbrBook')]
+    function NumberBooks(Request $request,BookRepository $repository){
+        $book=$repository->numberOfBooks();
+        return $this->render('book/listbook.html.twig',
+            ['books'=>$book]);
+    }
+
+
+
+
 }

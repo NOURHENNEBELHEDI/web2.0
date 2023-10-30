@@ -1,5 +1,10 @@
 <h1 align="center">list Book</h1>
 <a href="{{ path('add_book')}}">Add Book</a>
+<form action="{{path('Search')}}">
+    <label>Reference:</label>
+    <input type="text" name="r">
+    <input type="submit" value="Search">
+</form>
 <table border="1" align="center">
     <tr>
         <td>Ref</td>
@@ -31,7 +36,7 @@
             {# <td>{{ book.author.username }}</td>#}
             <td>{{ book.publicationDate|date }}</td>
             <td>{{ book.category }}</td>
-            <td><a href="{{path('show_book',{ref:book.ref})}}">Show</a>
+            <td><a href="{{path('app_detailBook',{ref:book.ref})}}">Show</a>
                 <a href="{{path('update_book',{ref:book.ref})}}">Update</a>
                 <a href="{{path('remove_book',{ref:book.ref})}}">Delete</a>
             </td>

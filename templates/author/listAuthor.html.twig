@@ -1,19 +1,29 @@
+<h1>List authors</h1>
+<form action="{{ path('search_nb') }}" align="center">
+    <label for="">Min Number </label>
+    <input type="number" name="min" />
+    <label for="">Max Number </label>
+    <input type="number" name="max" />
+
+    <input type="submit" value="Search" />
+</form>
 <table border="1">
     <tr>
-        <td>id</td>
-        <td>username</td>
-        <td>email</td>
+        <th>Username</th>
+        <th>Email</th>
+        <th>action</th>
 
     </tr>
-    {% for a in Authors %}
-        <tr>
-            <td>{{ a.id }}</td>
-            <td> {{ a.username|upper }}</td>
-            <td> {{ a.email }}</td>
 
-        </tr>
+    <tr>  {% for a in Authors %} </tr>
+    <td>{{ a.username }}</td>
+    <td> {{ a.email }}</td>
+
+    <td><a href="{{ path('update_authors', {'id': a.id}) }}">edit</a>
+    <a href="{{ path('remove_authors', {'id': a.id}) }}">delete</a></td>
+
 
     {% endfor %}
+
 </table>
-
-
+<a href="{{ path('remove') }}"> Delete authors with 0 books</a>

@@ -45,4 +45,90 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+   /* public function findByRef(): array
+    {
+        $qb = $this->createQueryBuilder('b')
+//->andWhere('b.exampleField = :val') // ->setParameter('val', $value) ->orderBy('b.ref', 'DESC')
+            ->setMaxResults(10);
+        return $qb->getQuery()->getResult();
+
+
+    }
+    /**
+     * @return Book[]
+
+    public function findAllBooksByAuthor($username) {
+        $qb = $this->createQueryBuilder('b')
+            ->join('b.author', 'a')
+            ->where('a.username = :username')
+            ->setParameter('username', $username);
+        return $qb->getQuery()->getResult();
+    }/**
+ * @return Book[]
+
+    public function findAllBooksByAuthor($username) {
+        $qb = $this->createQueryBuilder('b')
+            ->join('b.author', 'a')
+            ->andWhere('b.publicationDate > :x')
+
+            ->where('a.username = :username')
+            ->setParameter('username', $username);
+        return $qb->getQuery()->getResult();
+    }*/
+
+    function SearchByRef($ref){
+        return $this->createQueryBuilder('b')
+            ->where('b.ref LIKE ?1')
+            ->setParameter(1,'%'.$ref.'%')
+            ->orderBy('b.title','ASC')
+            ->getQuery()->getResult();
+    }
+
+    public function booksListByAuthors()
+    {
+        return $this->createQueryBuilder('b')
+            ->join('b.author', 'a')
+            ->addSelect('a')
+            ->orderBy('a.username', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    function findBook(){
+        return $this->createQueryBuilder('b')
+            ->join('b.author','a')
+            ->addSelect('a')
+            ->where('a.nb_books > :nb')
+            ->andWhere('b.publicationDate < :year')
+            ->setParameters([
+                'nb'=>10,'year'=>'2023-01-01'])
+            ->getQuery()->getResult();
+    }
+
+    function findByDate(){
+        $em=$this->getEntityManager();
+        return $em->createQuery(
+            'select b from App\Entity\Book b
+        where b.publicationDate  BETWEEN ?1 and ?2'
+        )
+            ->setParameters([
+                1=>'2014-01-01',2=>'2018-12-31'
+            ])
+            ->getResult();
+    }
+
+    public function updateCat()
+    {
+
+        return $this->createQueryBuilder('b')
+            ->where('b.category LIKE  :cat ')
+            ->update()->set('b.category', ':r')
+            ->setParameters(['cat' => 'Science-Fiction', 'r' => 'Romance'])
+
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }
+

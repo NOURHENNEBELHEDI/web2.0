@@ -23,11 +23,9 @@ class Author
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
     private Collection $books;
-<<<<<<< HEAD
     #[ORM\Column]
     private ?int $nbBooks= null;
-=======
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
+
 
     public function __construct()
     {
@@ -62,7 +60,6 @@ class Author
 
         return $this;
     }
-<<<<<<< HEAD
     public function getnbBooks(): ?int
     {
         return $this->nbBooks;
@@ -74,8 +71,7 @@ class Author
 
         return $this;
     }
-=======
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
+
 
     /**
      * @return Collection<int, Book>
@@ -85,6 +81,10 @@ class Author
         return $this->books;
     }
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbBook;
     public function addBook(Book $book): static
     {
         if (!$this->books->contains($book)) {
@@ -106,13 +106,21 @@ class Author
 
         return $this;
     }
-<<<<<<< HEAD
 
     public function __toString()
     {
         return (string)$this->getUsername();
     }
+    public function numberOfBooks()
+    {$minValue = 10;
+        $maxValue = 20;
 
-=======
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.nbBook BETWEEN :minValue AND :maxValue')
+            ->setParameter('minValue', $minValue)
+            ->setParameter('maxValue', $maxValue)
+            ->getQuery();
+
+        $result = $qb->getResult();
+    }
 }

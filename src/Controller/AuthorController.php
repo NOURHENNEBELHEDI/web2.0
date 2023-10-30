@@ -7,12 +7,11 @@ use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry as CustomManagerRegistry;
 use App\Entity\Author;
-<<<<<<< HEAD
 use App\Entity\Book;
-=======
->>>>>>> 3b0e16860b787fd0c263df6102f3ddf95c12a14f
+
 
 class AuthorController extends AbstractController
 {
@@ -107,5 +106,27 @@ class AuthorController extends AbstractController
         $em->flush();
         return $this->redirectToRoute("app_listAuthor");
     }
+    #[Route('/searchNb', name: "search_nb")]
+    public function searchAuthors(AuthorRepository $repository, Request $req)
+    {
 
+        $min = $req->get('min');
+        $max = $req->get('max');
+        return $this->render('author/listAuthors.html.twig', ["Authors" => $repository->nbBooksMinMax($min, $max)]);
+    }
+
+    #[Route('/remove', name: "remove")]
+    public function removeA(AuthorRepository $repository)
+    {
+        $repository->removeAuthorr();
+
+        return $this->redirectToRoute("app_listAuthor");
+    }
 }
+
+
+
+
+
+
+
